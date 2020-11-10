@@ -35,7 +35,7 @@ int MusicPlayer::getVolume() const
 
 void MusicPlayer::tooLoud()
 {
-    if(volume > -5)volume -= 10;
+    if(volume > 0)volume -= 5;
     player->setVolume(volume);
 }
 

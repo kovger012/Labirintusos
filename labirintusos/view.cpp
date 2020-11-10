@@ -30,14 +30,31 @@ View::View(QWidget *parent)
     showMap = false;
     isLightsOn = false;
     zoomSzamlalo = 950;
+    ujNezes = Right;
 
     //load Pixmaps
     //player(s)
     jatekosPixmap = QPixmap("pics/jatekos.png");
+    //jobb
     jatekosKinezetek.push_back(QPixmap("pics/jobb1.png"));
     jatekosKinezetek.push_back(QPixmap("pics/jobb2.png"));
     jatekosKinezetek.push_back(QPixmap("pics/jobb3.png"));
     jatekosKinezetek.push_back(QPixmap("pics/jobb4.png"));
+    //le
+    jatekosKinezetek.push_back(QPixmap("pics/szembe1.png"));
+    jatekosKinezetek.push_back(QPixmap("pics/szembe2.png"));
+    jatekosKinezetek.push_back(QPixmap("pics/szembe3.png"));
+    jatekosKinezetek.push_back(QPixmap("pics/szembe4.png"));
+    //bal
+    jatekosKinezetek.push_back(QPixmap("pics/bal1.png"));
+    jatekosKinezetek.push_back(QPixmap("pics/bal2.png"));
+    jatekosKinezetek.push_back(QPixmap("pics/bal3.png"));
+    jatekosKinezetek.push_back(QPixmap("pics/bal4.png"));
+    //fel
+    jatekosKinezetek.push_back(QPixmap("pics/hat1.png"));
+    jatekosKinezetek.push_back(QPixmap("pics/hat2.png"));
+    jatekosKinezetek.push_back(QPixmap("pics/hat3.png"));
+    jatekosKinezetek.push_back(QPixmap("pics/hat4.png"));
     //walls
     fal2 = QPixmap("pics/fal02.png");
     tavoliFal = QPixmap("pics/gigasotet.png");
@@ -80,7 +97,7 @@ View::View(QWidget *parent)
     connect(model, SIGNAL(update()), this, SLOT(update()));
     connect(model, SIGNAL(win()), this, SLOT(win()));
     connect(model, SIGNAL(masikat()), this, SLOT(ujEmber()));
-    connect(model, SIGNAL(lebeg()), this, SLOT(ujMap()));
+    //connect(model, SIGNAL(lebeg()), this, SLOT(ujMap()));
 }
 
 View::~View()
@@ -216,27 +233,42 @@ void View::keyPressEvent(QKeyEvent * event)
 {
     switch(event->key()) {
         case Qt::Key_A:
+            ujNezes = Left;
+            ujEmber();
             model->move(Left);
             break;
         case Qt::Key_W:
+            ujNezes = Up;
+            ujEmber();
             model->move(Up);
             break;
         case Qt::Key_S:
+            ujNezes = Down;
+            ujEmber();
             model->move(Down);
             break;
         case Qt::Key_D:
+            ujNezes = Right;
+            ujEmber();
             model->move(Right);
             break;
         case Qt::Key_Left:
+            ujNezes = Left;
             model->move(Left);
             break;
         case Qt::Key_Up:
+            ujNezes = Up;
+            ujEmber();
             model->move(Up);
             break;
         case Qt::Key_Down:
+            ujNezes = Down;
+            ujEmber();
             model->move(Down);
             break;
         case Qt::Key_Right:
+            ujNezes = Right;
+            ujEmber();
             model->move(Right);
             break;
         case Qt::Key_P:
@@ -256,8 +288,10 @@ void View::keyPressEvent(QKeyEvent * event)
             break;
         case Qt::Key_F1:
             musicplayer->tooLoud();
+            break;
         case Qt::Key_F2:
             musicplayer->tooQuiet();
+            break;
     }
 }
 
@@ -399,7 +433,11 @@ void View::seeNothing()
 
 void View::ujEmber()
 {
-    melyikEmber = (melyikEmber + 1) % 4;
+    if(ujNezes == Right) melyikEmber = (melyikEmber + 1) % 4 + 0;
+    else if(ujNezes == Down ) melyikEmber = (melyikEmber + 1) % 4 + 4;
+    else if(ujNezes == Left ) melyikEmber = (melyikEmber + 1) % 4 + 8;
+    else if(ujNezes == Up   ) melyikEmber = (melyikEmber + 1) % 4 + 12;
+
     update();
 }
 

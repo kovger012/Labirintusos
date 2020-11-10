@@ -66,8 +66,8 @@ private:
     QPixmap terkepPIXMAP;
     QPixmap jatekosPixmap;
     QPixmap talaj2;
+    Direction ujNezes;
     //functions
     void openMap();
-
 };
 #endif // VIEW_H

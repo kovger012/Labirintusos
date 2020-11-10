@@ -45,6 +45,7 @@ public slots:
     void seeEverything();
     void seeNothing();
     void ujEmber();
+    void ujMap();
     void showHelp();
 
 private:
@@ -57,6 +58,7 @@ private:
     int zoom;
     int zoomSzamlalo;
     int melyikEmber;
+    int melyikMap;
     QPixmap fal2;
     QVector<QPixmap> jatekosKinezetek;
     QPixmap tavoliTalaj;

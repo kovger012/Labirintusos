@@ -26,6 +26,7 @@ View::View(QWidget *parent)
 
     //initialize variables
     melyikEmber = 0;
+    melyikMap = 0;
     showMap = false;
     isLightsOn = false;
     zoomSzamlalo = 950;
@@ -75,10 +76,11 @@ View::View(QWidget *parent)
     QMenu* helpMenu = new QMenu("Súgó", this);
     helpMenu->addAction("Gombok használata", this, SLOT(showHelp()));
     ui->menubar->addMenu(helpMenu);
-
+    //connect
     connect(model, SIGNAL(update()), this, SLOT(update()));
     connect(model, SIGNAL(win()), this, SLOT(win()));
     connect(model, SIGNAL(masikat()), this, SLOT(ujEmber()));
+    connect(model, SIGNAL(lebeg()), this, SLOT(ujMap()));
 }
 
 View::~View()
@@ -398,6 +400,12 @@ void View::seeNothing()
 void View::ujEmber()
 {
     melyikEmber = (melyikEmber + 1) % 4;
+    update();
+}
+
+void View::ujMap()
+{
+    melyikMap = (melyikMap + 1) % 4;
     update();
 }
 

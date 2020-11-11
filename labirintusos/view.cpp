@@ -129,6 +129,7 @@ void View::paintEvent(QPaintEvent *)
 
     if(isLightsOn)
     {
+        //falak és talaj
         for (int x=0; x< model->getPalyaMatrix().size(); ++x) {
             for (int y=0; y< model->getPalyaMatrix().size(); ++y) {
                 if (model->getPalyaMatrix()[x][y] == 0){

@@ -102,47 +102,8 @@ void Model::labirintusCsinalo()
     Matrixcsinalo();
 }
 
-/*
-QPoint Model::Randomtalaj(int r)
-{
-    QPoint Random;
-    Random.setX(qrand()%r);
-    Random.setY((qrand()*11)%r);
-
-    if (palyamatrix[Random.x()][Random.y()]==0){
-        return Randomtalaj(r);
-    }else{
-        return Random;
-    }
-}
-*/
-
 void Model::terkepgeneralo()
 {
-    /*
-
-    //bal felső sarok
-    QPoint terkep0 = Randomtalaj(this->n/2);
-    terkep.push_back(terkep0);
-
-    //jobb felső sarok
-    QPoint terkep1 = Randomtalaj(this->n/2);
-    terkep1.setX(terkep1.x()+this->n/2);
-    terkep.push_back(terkep1);
-
-    //bal alsó sarok
-    QPoint terkep2 = Randomtalaj(this->n/2);
-    terkep2.setY(terkep2.y()+this->n/2);
-    terkep.push_back(terkep2);
-
-    //jobb alsó sarok
-    QPoint terkep3 = Randomtalaj(this->n/2);
-    terkep3.setX(terkep3.x() + this->n/2);
-    terkep3.setY(terkep3.y() + this->n/2);
-    terkep.push_back(terkep3);
-
-    */
-
     terkepdarab = 2;    //gyök 4
 
     QVector<QPoint> negyed0;
@@ -553,16 +514,16 @@ void Model::move(Direction dir)
     {
         switch(dir) {
             case Left:
-                if(jatekos.x() > 0 && !fal.contains(QPoint(jatekos.x()-1, jatekos.y()))) jatekos.setX(jatekos.x()-1);
+                if(jatekos.x() > 0 && palyamatrix[jatekos.x()-1][jatekos.y()]!=0) jatekos.setX(jatekos.x()-1);
                 break;
             case Right:
-                if(jatekos.x() < n-1 && !fal.contains(QPoint(jatekos.x()+1, jatekos.y()))) jatekos.setX(jatekos.x()+1);
+                if(jatekos.x() < n-1 && palyamatrix[jatekos.x()+1][jatekos.y()]!=0) jatekos.setX(jatekos.x()+1);
                 break;
             case Up:
-                if(jatekos.y() > 0 && !fal.contains(QPoint(jatekos.x(), jatekos.y()-1))) jatekos.setY(jatekos.y()-1);
+                if(jatekos.y() > 0 && palyamatrix[jatekos.x()][jatekos.y()-1]!=0) jatekos.setY(jatekos.y()-1);
                 break;
             case Down:
-                if(jatekos.y() < n-1 && !fal.contains(QPoint(jatekos.x(), jatekos.y()+1))) jatekos.setY(jatekos.y()+1);
+                if(jatekos.y() < n-1 && palyamatrix[jatekos.x()][jatekos.y()+1]!=0) jatekos.setY(jatekos.y()+1);
                 break;
         }
     }

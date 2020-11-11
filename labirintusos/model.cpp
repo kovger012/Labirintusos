@@ -602,7 +602,7 @@ void Model::messzeseg()
     if(x-1>-1 && palyamatrix[x-1][y]==0) latasDEfal.push_back(QPoint(x-1, y));
     else latas.push_back(QPoint(x-1, y));
 
-    if(x+1<n-1 && palyamatrix[x+1][y]==0) latasDEfal.push_back(QPoint(x+1, y));
+    if(x+1<n && palyamatrix[x+1][y]==0) latasDEfal.push_back(QPoint(x+1, y));
     else latas.push_back(QPoint(x+1, y));
 
     if(latasDEfal.contains(bf))

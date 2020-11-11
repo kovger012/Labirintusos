@@ -149,19 +149,17 @@ void View::paintEvent(QPaintEvent *)
     }
     else
     {
-        //falak
+        //falak és talaj
         painter.setPen(QPen(Qt::black, 0));
         painter.setBrush(Qt::black);
-        for(int i = 0; i < model->getFal().size(); ++i)
-        {
-            painter.drawRect(model->getFal()[i].x() * zoom, model->getFal()[i].y() * zoom + yEltolas, 1 * zoom, 1 * zoom);
-        }
-        //talaj
-        painter.setPen(QPen(Qt::black, 0));
-        painter.setBrush(Qt::black);
-        for(int i = 0; i < model->getTalaj().size(); ++i)
-        {
-            painter.drawRect(model->getTalaj()[i].x() * zoom, model->getTalaj()[i].y() * zoom + yEltolas, 1 * zoom, 1 * zoom);
+        for (int x=0; x< model->getPalyaMatrix().size(); ++x) {
+            for (int y=0; y< model->getPalyaMatrix().size(); ++y) {
+                if (model->getPalyaMatrix()[x][y] == 0){
+                    painter.drawRect(x*zoom, y*zoom + yEltolas, 1*zoom, 1*zoom);
+                }else{
+                    painter.drawRect(x*zoom, y*zoom + yEltolas, 1*zoom, 1*zoom);
+                }
+            }
         }
         //nem látóhatár
         painter.setPen(QPen(Qt::black, 0));
@@ -201,20 +199,18 @@ void View::paintEvent(QPaintEvent *)
 
     if(showMap)
     {
-        //falak
         painter.setPen(QPen(Qt::black, 0));
         painter.setBrush(Qt::black);
-        for(int i = 0; i < model->getFal().size(); ++i)
-        {
-            painter.drawRect(model->getFal()[i].x() * zoom, model->getFal()[i].y() * zoom + yEltolas, 1 * zoom, 1 * zoom);
+        for (int x=0; x< model->getPalyaMatrix().size(); ++x) {
+            for (int y=0; y< model->getPalyaMatrix().size(); ++y) {
+                if (model->getPalyaMatrix()[x][y] == 0){
+                    painter.drawRect(x*zoom, y*zoom + yEltolas, 1*zoom, 1*zoom);
+                }else{
+                    painter.drawRect(x*zoom, y*zoom + yEltolas, 1*zoom, 1*zoom);
+                }
+            }
         }
-        //talaj
-        painter.setPen(QPen(Qt::black, 0));
-        painter.setBrush(Qt::black);
-        for(int i = 0; i < model->getTalaj().size(); ++i)
-        {
-            painter.drawRect(model->getTalaj()[i].x() * zoom, model->getTalaj()[i].y() * zoom + yEltolas, 1 * zoom, 1 * zoom);
-        }
+
         //érintett útak
         painter.setBrush(Qt::blue);
         for(int i = 0; i < model->getUtvonal().size(); ++i)
@@ -398,29 +394,6 @@ void View::ujSzazOtvenJatek()
 {
     model->setN(150);
     model->newGame();
-}
-
-void View::writeIntoFile()
-{
-    QFile file("korabbiLabirintusok.txt");
-    if(file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
-    {
-        // We're going to streaming text to the file
-        QTextStream stream(&file);
-        for(int i = 0; i < model->getN(); ++i)
-        {
-            QString line = "";
-            for(int j = 0; j < model->getN(); ++j)
-            {
-                line += model->getFal().contains(QPoint(j, i)) ? "1 " : "0 ";
-            }
-            line += "\n";
-            stream << line;
-        }
-        stream << "------------------------------------------------------------------------------------\n";
-        file.close();
-        qDebug() << "Writing finished";
-    }
 }
 
 void View::seeEverything()

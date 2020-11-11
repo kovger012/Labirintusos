@@ -36,6 +36,10 @@ public:
 
     QVector<QPoint> getLataster() const;
 
+    QVector<QVector<int>> getPalyaMatrix() const;
+
+    void Matrixcsinalo();
+
     void terkepgeneralo ();
 
     void alapAllapot(int n);
@@ -91,6 +95,7 @@ private:
     QVector<QPoint> ures;
     QVector<QPoint> fal;
     QVector<QPoint> talaj;
+    QVector<QVector<int>> palyamatrix;
     QVector<QPoint> terkep;
     QVector<bool>   megVanATerkep;
     QVector<QPoint> utvonal;

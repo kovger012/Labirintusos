@@ -42,6 +42,12 @@ QVector<QPoint> Model::getTerkep() const
     return terkep;
 }
 
+QVector<QVector<int>> Model::getPalyaMatrix() const
+{
+    return palyamatrix;
+}
+
+
 void Model::alapAllapot(int n)
 {
     for(int i = 0; i < n; ++i)
@@ -89,6 +95,11 @@ void Model::labirintusCsinalo()
             vizszintes(p);
         }
     }
+    palyamatrix.resize(n);
+    for ( int i = 0 ; i < n ; ++i ) {
+        palyamatrix[i].resize(n);
+    }
+    Matrixcsinalo();
 }
 
 void Model::terkepgeneralo()
@@ -152,6 +163,21 @@ void Model::terkepgeneralo()
     int terkep3_index = qrand()%negyed3.size();
     terkep.push_back(negyed3[terkep3_index]);
 
+}
+
+void Model::Matrixcsinalo()
+{ 
+    int falak = 0;        //matrixban a fal koordinátákat 0-val
+    int talajok = 1;      //matrixban a talaj koordinátákat 1-el
+
+    for (int i=0; i<fal.size(); ++i)
+    {
+        palyamatrix[fal[i].x()][fal[i].y()] = (falak);
+    }
+    for (int i=0; i<talaj.size(); ++i)
+    {
+        palyamatrix[talaj[i].x()][talaj[i].y()] = (talajok);
+    }
 }
 
 void Model::fuggoleges(QPoint p)

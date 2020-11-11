@@ -129,6 +129,16 @@ void View::paintEvent(QPaintEvent *)
 
     if(isLightsOn)
     {
+        for (int x=0; x< model->getPalyaMatrix().size(); ++x) {
+            for (int y=0; y< model->getPalyaMatrix().size(); ++y) {
+                if (model->getPalyaMatrix()[x][y] == 0){
+                    painter.drawImage(QPoint(x*zoom, y*zoom + yEltolas), fal2Img);
+                }else{
+                    painter.drawImage(QPoint(x*zoom, y*zoom + yEltolas), talaj2Img);
+                }
+            }
+        }
+        /*
         //falak
         for(int i = 0; i < model->getFal().size(); ++i)
         {
@@ -139,11 +149,13 @@ void View::paintEvent(QPaintEvent *)
         {
             painter.drawImage(QPoint(model->getTalaj()[i].x() * zoom, model->getTalaj()[i].y() * zoom + yEltolas), talaj2Img);
         }
+        */
         //térkép
         for(int i = 0; i < model->getTerkep().size(); ++i)
         {
             painter.drawImage(QPoint(model->getTerkep()[i].x() * zoom, model->getTerkep()[i].y() * zoom + yEltolas), terkepesIMAGE);
         }
+
     }
     else
     {

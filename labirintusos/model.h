@@ -72,6 +72,8 @@ public:
 
     void refreshVisibleMaps();
 
+    QPoint Randomtalaj(int r); // az int a koordinátarendszer mérete amiben random talaj kell
+
     QVector<QPoint> getUtvonal() const;
 
     QVector<QPoint> getTavoliTalaj() const;

@@ -138,18 +138,7 @@ void View::paintEvent(QPaintEvent *)
                 }
             }
         }
-        /*
-        //falak
-        for(int i = 0; i < model->getFal().size(); ++i)
-        {
-            painter.drawImage(QPoint(model->getFal()[i].x() * zoom, model->getFal()[i].y() * zoom + yEltolas), fal2Img);
-        }
-        //talaj
-        for(int i = 0; i < model->getTalaj().size(); ++i)
-        {
-            painter.drawImage(QPoint(model->getTalaj()[i].x() * zoom, model->getTalaj()[i].y() * zoom + yEltolas), talaj2Img);
-        }
-        */
+
         //térkép
         for(int i = 0; i < model->getTerkep().size(); ++i)
         {

@@ -102,8 +102,47 @@ void Model::labirintusCsinalo()
     Matrixcsinalo();
 }
 
+/*
+QPoint Model::Randomtalaj(int r)
+{
+    QPoint Random;
+    Random.setX(qrand()%r);
+    Random.setY((qrand()*11)%r);
+
+    if (palyamatrix[Random.x()][Random.y()]==0){
+        return Randomtalaj(r);
+    }else{
+        return Random;
+    }
+}
+*/
+
 void Model::terkepgeneralo()
 {
+    /*
+
+    //bal felső sarok
+    QPoint terkep0 = Randomtalaj(this->n/2);
+    terkep.push_back(terkep0);
+
+    //jobb felső sarok
+    QPoint terkep1 = Randomtalaj(this->n/2);
+    terkep1.setX(terkep1.x()+this->n/2);
+    terkep.push_back(terkep1);
+
+    //bal alsó sarok
+    QPoint terkep2 = Randomtalaj(this->n/2);
+    terkep2.setY(terkep2.y()+this->n/2);
+    terkep.push_back(terkep2);
+
+    //jobb alsó sarok
+    QPoint terkep3 = Randomtalaj(this->n/2);
+    terkep3.setX(terkep3.x() + this->n/2);
+    terkep3.setY(terkep3.y() + this->n/2);
+    terkep.push_back(terkep3);
+
+    */
+
     terkepdarab = 2;    //gyök 4
 
     QVector<QPoint> negyed0;
@@ -111,11 +150,11 @@ void Model::terkepgeneralo()
     QVector<QPoint> negyed2;
     QVector<QPoint> negyed3;
     //bal felső sarok
-    for (int i=0; i<talaj.size(); ++i)
-    {
-        if (talaj[i].x()<(n/terkepdarab) && talaj[i].y()<(n/terkepdarab))
-        {
-            negyed0.push_back(talaj[i]);
+    for (int i=0; i<palyamatrix.size()/terkepdarab; ++i){
+        for (int j=0; j<palyamatrix.size()/terkepdarab; ++j){
+            if (palyamatrix[i][j]==1) {
+                negyed0.push_back(QPoint(i,j));
+            }
         }
     }
 
@@ -123,11 +162,11 @@ void Model::terkepgeneralo()
     terkep.push_back(negyed0[terkep0_index]);
 
     //jobb felső sarok
-    for (int i=0; i<talaj.size(); ++i)
-    {
-        if (talaj[i].x()>(n/terkepdarab) && talaj[i].y()<(n/terkepdarab))
-        {
-            negyed1.push_back(talaj[i]);
+    for (int i=palyamatrix.size()/terkepdarab; i<palyamatrix.size(); ++i){
+        for (int j=0; j<palyamatrix.size()/terkepdarab; ++j){
+            if (palyamatrix[i][j]==1) {
+                negyed1.push_back(QPoint(i,j));
+            }
         }
     }
     int terkep1_index = qrand()%negyed1.size();
@@ -138,11 +177,11 @@ void Model::terkepgeneralo()
     terkep.push_back(negyed1[terkep1_index]);
 
     //bal alsó sarok
-    for (int i=0; i<talaj.size(); ++i)
-    {
-        if (talaj[i].x()<(n/terkepdarab) && talaj[i].y()>(n/terkepdarab))
-        {
-            negyed2.push_back(talaj[i]);
+    for (int i=0; i<palyamatrix.size()/terkepdarab; ++i){
+        for (int j=palyamatrix.size()/terkepdarab; j<palyamatrix.size(); ++j){
+            if (palyamatrix[i][j]==1) {
+                negyed2.push_back(QPoint(i,j));
+            }
         }
     }
     int terkep2_index = qrand()%negyed2.size();
@@ -152,11 +191,11 @@ void Model::terkepgeneralo()
     terkep.push_back(negyed2[terkep2_index]);
 
     //jobb alsó sarok
-    for (int i=0; i<talaj.size(); ++i)
-    {
-        if (talaj[i].x()>(n/terkepdarab) && talaj[i].y()>(n/terkepdarab))
-        {
-            negyed3.push_back(talaj[i]);
+    for (int i=palyamatrix.size()/terkepdarab; i<palyamatrix.size(); ++i){
+        for (int j=palyamatrix.size()/terkepdarab; j<palyamatrix.size(); ++j){
+            if (palyamatrix[i][j]==1) {
+                negyed3.push_back(QPoint(i,j));
+            }
         }
     }
 

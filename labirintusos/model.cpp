@@ -167,8 +167,8 @@ void Model::terkepgeneralo()
 
 void Model::Matrixcsinalo()
 { 
-    int falak = 0;        //matrixban a fal koordinátákat 0-val
-    int talajok = 1;      //matrixban a talaj koordinátákat 1-el
+    int falak = 0;        //matrixban a fal koordináták 0
+    int talajok = 1;      //matrixban a talaj koordináták 1
 
     for (int i=0; i<fal.size(); ++i)
     {
@@ -588,18 +588,20 @@ void Model::messzeseg()
     }
     for(int i = -1; i <= 1; ++i)
     {
-        if(fal.contains(QPoint(x+i, y-1))) latasDEfal.push_back(QPoint(x+i, y-1));
+        if(x+i>-1 && x+i< n && y>0 && palyamatrix[x+i][y-1]==0) latasDEfal.push_back(QPoint(x+i, y-1));
         else latas.push_back(QPoint(x+i, y-1));
     }
     for(int i = -1; i <= 1; ++i)
     {
-        if(fal.contains(QPoint(x+i, y+1))) latasDEfal.push_back(QPoint(x+i, y+1));
+        if(x+i>-1 && x+i< n && y< n-1 && palyamatrix[x+i][y+1]==0) latasDEfal.push_back(QPoint(x+i, y+1));
         else latas.push_back(QPoint(x+i, y+1));
     }
-    if(fal.contains(QPoint(x-1, y))) latasDEfal.push_back(QPoint(x-1, y));
+    if(x-1>-1 && palyamatrix[x-1][y]==0) latasDEfal.push_back(QPoint(x-1, y));
     else latas.push_back(QPoint(x-1, y));
-    if(fal.contains(QPoint(x+1, y))) latasDEfal.push_back(QPoint(x+1, y));
+
+    if(x+1<n-1 && palyamatrix[x+1][y]==0) latasDEfal.push_back(QPoint(x+1, y));
     else latas.push_back(QPoint(x+1, y));
+
     if(latasDEfal.contains(bf))
     {
         nemLatas.push_back(QPoint(bf.x()-1, bf.y()-1));
@@ -654,8 +656,8 @@ void Model::messzeseg()
         {
             if(!(latas.contains(QPoint(i, j)) || nemLatas.contains(QPoint(i, j)) || latasDEfal.contains(QPoint(i, j))))
             {
-            if(fal.contains(QPoint(i, j))) tavoliFal.push_back(QPoint(i, j));
-            else tavoliTalaj.push_back(QPoint(i, j));
+                if(i>-1 && i<n && j>-1 && j<n && palyamatrix[i][j]==0) tavoliFal.push_back(QPoint(i, j));
+                else tavoliTalaj.push_back(QPoint(i, j));
             }
         }
     }

@@ -41,7 +41,6 @@ public slots:
     void ujSzazHarmincJatek();
     void ujSzazNegyvenJatek();
     void ujSzazOtvenJatek();
-    void writeIntoFile();
     void seeEverything();
     void seeNothing();
     void ujEmber();

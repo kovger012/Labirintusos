@@ -510,6 +510,7 @@ QPoint Model::getJatekos() const
 
 void Model::move(Direction dir)
 {
+    //qDebug() << "moveba belép";
     if(canMove)
     {
         switch(dir) {
@@ -527,6 +528,7 @@ void Model::move(Direction dir)
                 break;
         }
     }
+    //qDebug() << "lépett";
     if(jatekos.x() < n/terkepdarab && jatekos.y() < n/terkepdarab && megVanATerkep[0] )
     {
         voltamMarItt();
@@ -543,13 +545,18 @@ void Model::move(Direction dir)
     {
         voltamMarItt();
     }
+    //qDebug() << "terkepes faszságok megvannak";
     tavoliFal.clear();
     tavoliTalaj.clear();
     visibleMaps.clear();
 
+    //qDebug() << "látás törlése meg van";
+
     messzeseg();
     tester();
     refreshVisibleMaps();
+
+    //qDebug() << "látás ujracsinálás";
     update();
 }
 

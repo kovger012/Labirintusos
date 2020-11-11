@@ -61,6 +61,7 @@ View::View(QWidget *parent)
     //grounds
     talaj2 = QPixmap("pics/talaj2.png");
     tavoliTalaj = QPixmap("pics/setettalaj.png");
+    labnyom = QPixmap("pics/labnyom.png");
     //map
     terkepPIXMAP = QPixmap("pics/terkep.png");
 
@@ -126,6 +127,8 @@ void View::paintEvent(QPaintEvent *)
     tavFal= tavFal.scaled(zoom, zoom, Qt::IgnoreAspectRatio);
     QImage terkepesIMAGE = terkepPIXMAP.toImage();
     terkepesIMAGE = terkepesIMAGE.scaled(zoom, zoom, Qt::IgnoreAspectRatio);
+    QImage labnyomIMAGE = labnyom.toImage();
+    labnyomIMAGE = labnyomIMAGE.scaled(zoom, zoom, Qt::IgnoreAspectRatio);
 
     if(isLightsOn)
     {
@@ -212,10 +215,9 @@ void View::paintEvent(QPaintEvent *)
         }
 
         //érintett útak
-        painter.setBrush(Qt::blue);
         for(int i = 0; i < model->getUtvonal().size(); ++i)
         {
-            painter.drawRect(model->getUtvonal()[i].x() * zoom, model->getUtvonal()[i].y() * zoom + yEltolas, 1 * zoom, 1 * zoom);
+            painter.drawImage(QPoint(model->getUtvonal()[i].x() * zoom, model->getUtvonal()[i].y() * zoom + yEltolas),labnyomIMAGE);
         }
     }
 

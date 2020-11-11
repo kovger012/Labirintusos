@@ -65,6 +65,7 @@ private:
     QPixmap terkepPIXMAP;
     QPixmap jatekosPixmap;
     QPixmap talaj2;
+    QPixmap labnyom;
     Direction ujNezes;
     //functions
     void openMap();

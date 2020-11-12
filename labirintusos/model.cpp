@@ -160,6 +160,9 @@ void Model::targygeneralo()
     //kincsek
     for (int i=0; i<=(n*n)/1600; ++i){
         int kincs1_index = (qrand()*(11+i))%negyed1.size();
+        while(negyed2[kincs1_index] == QPoint(0, n-1)) {
+            kincs1_index = qrand()%negyed2.size();
+        }
         palyamatrix[negyed1[kincs1_index].x()][negyed1[kincs1_index].y()]=2+((qrand()*(11+i))%3);
         kincs.push_back(QPoint(negyed1[kincs1_index].x(),negyed1[kincs1_index].y()));
         negyed1.remove(kincs1_index);
@@ -184,6 +187,9 @@ void Model::targygeneralo()
     //kincsek
     for (int i=0; i<=(n*n)/1600; ++i){
         int kincs2_index = (qrand()*(11+i))%negyed2.size();
+        while(negyed2[kincs2_index] == QPoint(0, n-1)) {
+            kincs2_index = qrand()%negyed2.size();
+        }
         palyamatrix[negyed2[kincs2_index].x()][negyed2[kincs2_index].y()]=2+((qrand()*(11+i))%3);
         kincs.push_back(QPoint(negyed2[kincs2_index].x(),negyed2[kincs2_index].y()));
         negyed2.remove(kincs2_index);
@@ -887,7 +893,6 @@ void Model::voltamMarItt()
 
 void Model::refreshVisibleMaps()
 {
-    qDebug()<<"faszom";
     for(int i = 0; i < terkep.size(); ++i)
     {
         if(abs(jatekos.x() - terkep[i].x()) == 1 && abs(jatekos.y() - terkep[i].y()) == 1)
@@ -908,7 +913,6 @@ void Model::refreshVisibleMaps()
 
 void Model::refreshVisibleKincs()
 {
-    qDebug()<<"baszmeg";
     for(int i = 0; i < kincs.size(); ++i)
     {
         if(abs(jatekos.x() - kincs[i].x()) == 1 && abs(jatekos.y() - kincs[i].y()) == 1)

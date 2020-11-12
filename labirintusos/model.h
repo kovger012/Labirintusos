@@ -28,6 +28,8 @@ public:
 
     QVector<QPoint> getTerkep() const;
 
+    QVector<QPoint> getKincs() const;
+
     QVector<QPoint> getLatas() const;
 
     QVector<QPoint> getNemLatas() const;
@@ -40,7 +42,7 @@ public:
 
     void Matrixcsinalo();
 
-    void terkepgeneralo ();
+    void targygeneralo ();
 
     void alapAllapot(int n);
 
@@ -72,7 +74,7 @@ public:
 
     void refreshVisibleMaps();
 
-    QPoint Randomtalaj(int r); // az int a koordinátarendszer mérete amiben random talaj kell
+    void refreshVisibleKincs();
 
     QVector<QPoint> getUtvonal() const;
 
@@ -81,6 +83,8 @@ public:
     QVector<QPoint> getTavoliFal() const;
 
     QVector<QPoint> getVisibleMaps() const;
+
+    QVector<QPoint> getVisibleKincs() const;
 
 signals:
     void update();
@@ -99,6 +103,7 @@ private:
     QVector<QPoint> talaj;
     QVector<QVector<int>> palyamatrix;
     QVector<QPoint> terkep;
+    QVector<QPoint> kincs;
     QVector<bool>   megVanATerkep;
     QVector<QPoint> utvonal;
     QPoint jatekos;
@@ -108,6 +113,7 @@ private:
     QTimer* timer;
     QTimer* refreshJatekos;
     QVector<QPoint> visibleMaps;
+    QVector<QPoint> visibleKincs;
     int ido;
     //------------------
     QVector<QPoint> latasDEfal;

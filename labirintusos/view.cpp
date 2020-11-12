@@ -64,6 +64,10 @@ View::View(QWidget *parent)
     labnyom = QPixmap("pics/labnyom.png");
     //map
     terkepPIXMAP = QPixmap("pics/terkep.png");
+    //kincsek
+    kincsKinezetek.push_back(QPixmap("pics/kincs1.png"));
+    kincsKinezetek.push_back(QPixmap("pics/kincs2.png"));
+    kincsKinezetek.push_back(QPixmap("pics/kincs3.png"));
 
     //create menus
     //new game menu
@@ -132,13 +136,19 @@ void View::paintEvent(QPaintEvent *)
 
     if(isLightsOn)
     {
-        //falak és talaj
+        //falak és talaj és kincsek
         for (int x=0; x< model->getPalyaMatrix().size(); ++x) {
             for (int y=0; y< model->getPalyaMatrix().size(); ++y) {
                 if (model->getPalyaMatrix()[x][y] == 0){
                     painter.drawImage(QPoint(x*zoom, y*zoom + yEltolas), fal2Img);
-                }else{
+                }else if (model->getPalyaMatrix()[x][y] == 1){
                     painter.drawImage(QPoint(x*zoom, y*zoom + yEltolas), talaj2Img);
+                }else if (model->getPalyaMatrix()[x][y] == 2){
+                    painter.drawImage(QPoint(x*zoom, y*zoom + yEltolas), kincsKinezetek[0].toImage().scaled(zoom, zoom, Qt::IgnoreAspectRatio));
+                }else if (model->getPalyaMatrix()[x][y] == 3){
+                    painter.drawImage(QPoint(x*zoom, y*zoom + yEltolas), kincsKinezetek[1].toImage().scaled(zoom, zoom, Qt::IgnoreAspectRatio));
+                }else if (model->getPalyaMatrix()[x][y] == 4){
+                    painter.drawImage(QPoint(x*zoom, y*zoom + yEltolas), kincsKinezetek[2].toImage().scaled(zoom, zoom, Qt::IgnoreAspectRatio));
                 }
             }
         }
@@ -148,7 +158,6 @@ void View::paintEvent(QPaintEvent *)
         {
             painter.drawImage(QPoint(model->getTerkep()[i].x() * zoom, model->getTerkep()[i].y() * zoom + yEltolas), terkepesIMAGE);
         }
-
     }
     else
     {
@@ -197,6 +206,17 @@ void View::paintEvent(QPaintEvent *)
         for(int i = 0; i < model->getVisibleMaps().size(); ++i)
         {
             painter.drawImage(QPoint(model->getVisibleMaps()[i].x() * zoom, model->getVisibleMaps()[i].y() * zoom + yEltolas), terkepesIMAGE);
+        }
+        //látható kincsek
+        for(int i = 0; i < model->getVisibleKincs().size(); ++i)
+        {
+            if (model->getPalyaMatrix()[model->getVisibleKincs()[i].x()][model->getVisibleKincs()[i].y()] == 2){
+                painter.drawImage(QPoint(model->getVisibleKincs()[i].x() * zoom, model->getVisibleKincs()[i].y() * zoom + yEltolas), kincsKinezetek[0].toImage().scaled(zoom, zoom, Qt::IgnoreAspectRatio));
+            }else if (model->getPalyaMatrix()[model->getVisibleKincs()[i].x()][model->getVisibleKincs()[i].y()] == 3){
+                painter.drawImage(QPoint(model->getVisibleKincs()[i].x() * zoom, model->getVisibleKincs()[i].y() * zoom + yEltolas), kincsKinezetek[1].toImage().scaled(zoom, zoom, Qt::IgnoreAspectRatio));
+            }else if (model->getPalyaMatrix()[model->getVisibleKincs()[i].x()][model->getVisibleKincs()[i].y()] == 4){
+                painter.drawImage(QPoint(model->getVisibleKincs()[i].x() * zoom, model->getVisibleKincs()[i].y() * zoom + yEltolas), kincsKinezetek[2].toImage().scaled(zoom, zoom, Qt::IgnoreAspectRatio));
+            }
         }
     }
 

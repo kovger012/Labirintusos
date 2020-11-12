@@ -60,6 +60,7 @@ private:
     int melyikMap;
     QPixmap fal2;
     QVector<QPixmap> jatekosKinezetek;
+    QVector<QPixmap> kincsKinezetek;
     QPixmap tavoliTalaj;
     QPixmap tavoliFal;
     QPixmap terkepPIXMAP;

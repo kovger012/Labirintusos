@@ -42,6 +42,12 @@ QVector<QPoint> Model::getTerkep() const
     return terkep;
 }
 
+QVector<QPoint> Model::getKincs() const
+{
+    return kincs;
+}
+
+
 QVector<QVector<int>> Model::getPalyaMatrix() const
 {
     return palyamatrix;
@@ -64,10 +70,12 @@ void Model::alapAllapot(int n)
     megVanATerkep.push_back(false);
     megVanATerkep.push_back(false);
     terkep.clear();
+    kincs.clear();
     utvonal.clear();
     tavoliFal.clear();
     tavoliTalaj.clear();
     visibleMaps.clear();
+    visibleKincs.clear();
 }
 
 void Model::labirintusCsinalo()
@@ -102,7 +110,7 @@ void Model::labirintusCsinalo()
     Matrixcsinalo();
 }
 
-void Model::terkepgeneralo()
+void Model::targygeneralo()
 {
     terkepdarab = 2;    //gyök 4
 
@@ -110,7 +118,7 @@ void Model::terkepgeneralo()
     QVector<QPoint> negyed1;
     QVector<QPoint> negyed2;
     QVector<QPoint> negyed3;
-    //bal felső sarok
+    //################bal felső sarok
     for (int i=0; i<palyamatrix.size()/terkepdarab; ++i){
         for (int j=0; j<palyamatrix.size()/terkepdarab; ++j){
             if (palyamatrix[i][j]==1) {
@@ -119,10 +127,20 @@ void Model::terkepgeneralo()
         }
     }
 
+    //térkép
     int terkep0_index = qrand()%negyed0.size();
     terkep.push_back(negyed0[terkep0_index]);
+    negyed0.remove(terkep0_index);
 
-    //jobb felső sarok
+    //kincsek
+    for (int i=0; i<=(n*n)/1600; ++i){
+        int kincs0_index = (qrand()*(11+i))%negyed0.size();
+        palyamatrix[negyed0[kincs0_index].x()][negyed0[kincs0_index].y()]=2+((qrand()*(11+i))%3);
+        kincs.push_back(QPoint(negyed0[kincs0_index].x(),negyed0[kincs0_index].y()));
+        negyed0.remove(kincs0_index);
+    }
+
+    //################jobb felső sarok
     for (int i=palyamatrix.size()/terkepdarab; i<palyamatrix.size(); ++i){
         for (int j=0; j<palyamatrix.size()/terkepdarab; ++j){
             if (palyamatrix[i][j]==1) {
@@ -130,14 +148,24 @@ void Model::terkepgeneralo()
             }
         }
     }
+    //terkep
     int terkep1_index = qrand()%negyed1.size();
     while(negyed1[terkep1_index] == QPoint(n-1, 0)) {
         terkep1_index = qrand()%negyed1.size();
     }
 
     terkep.push_back(negyed1[terkep1_index]);
+    negyed1.remove(terkep1_index);
 
-    //bal alsó sarok
+    //kincsek
+    for (int i=0; i<=(n*n)/1600; ++i){
+        int kincs1_index = (qrand()*(11+i))%negyed1.size();
+        palyamatrix[negyed1[kincs1_index].x()][negyed1[kincs1_index].y()]=2+((qrand()*(11+i))%3);
+        kincs.push_back(QPoint(negyed1[kincs1_index].x(),negyed1[kincs1_index].y()));
+        negyed1.remove(kincs1_index);
+    }
+
+    //#################bal alsó sarok
     for (int i=0; i<palyamatrix.size()/terkepdarab; ++i){
         for (int j=palyamatrix.size()/terkepdarab; j<palyamatrix.size(); ++j){
             if (palyamatrix[i][j]==1) {
@@ -145,13 +173,23 @@ void Model::terkepgeneralo()
             }
         }
     }
+    //terkep
     int terkep2_index = qrand()%negyed2.size();
     while(negyed2[terkep2_index] == QPoint(0, n-1)) {
         terkep2_index = qrand()%negyed2.size();
     }
     terkep.push_back(negyed2[terkep2_index]);
+    negyed2.remove(terkep2_index);
 
-    //jobb alsó sarok
+    //kincsek
+    for (int i=0; i<=(n*n)/1600; ++i){
+        int kincs2_index = (qrand()*(11+i))%negyed2.size();
+        palyamatrix[negyed2[kincs2_index].x()][negyed2[kincs2_index].y()]=2+((qrand()*(11+i))%3);
+        kincs.push_back(QPoint(negyed2[kincs2_index].x(),negyed2[kincs2_index].y()));
+        negyed2.remove(kincs2_index);
+    }
+
+    //#################jobb alsó sarok
     for (int i=palyamatrix.size()/terkepdarab; i<palyamatrix.size(); ++i){
         for (int j=palyamatrix.size()/terkepdarab; j<palyamatrix.size(); ++j){
             if (palyamatrix[i][j]==1) {
@@ -162,7 +200,15 @@ void Model::terkepgeneralo()
 
     int terkep3_index = qrand()%negyed3.size();
     terkep.push_back(negyed3[terkep3_index]);
+    negyed3.remove(terkep3_index);
 
+    //kincsek
+    for (int i=0; i<=(n*n)/1600; ++i){
+        int kincs3_index = (qrand()*(11+i))%negyed3.size();
+        palyamatrix[negyed3[kincs3_index].x()][negyed3[kincs3_index].y()]=2+((qrand()*(11+i))%3);
+        kincs.push_back(QPoint(negyed3[kincs3_index].x(),negyed3[kincs3_index].y()));
+        negyed3.remove(kincs3_index);
+    }
 }
 
 void Model::Matrixcsinalo()
@@ -548,10 +594,12 @@ void Model::move(Direction dir)
     tavoliFal.clear();
     tavoliTalaj.clear();
     visibleMaps.clear();
+    visibleKincs.clear();
 
     messzeseg();
     tester();
     refreshVisibleMaps();
+    refreshVisibleKincs();
 
     update();
 }
@@ -787,10 +835,11 @@ void Model::newGame()
     latas.clear();
     alapAllapot(n);
     labirintusCsinalo();
-    terkepgeneralo();
+    targygeneralo();
     messzeseg();
     ++gamesPlayed;
     refreshVisibleMaps();
+    refreshVisibleKincs();
     update();
 }
 
@@ -838,6 +887,7 @@ void Model::voltamMarItt()
 
 void Model::refreshVisibleMaps()
 {
+    qDebug()<<"faszom";
     for(int i = 0; i < terkep.size(); ++i)
     {
         if(abs(jatekos.x() - terkep[i].x()) == 1 && abs(jatekos.y() - terkep[i].y()) == 1)
@@ -856,6 +906,27 @@ void Model::refreshVisibleMaps()
     }
 }
 
+void Model::refreshVisibleKincs()
+{
+    qDebug()<<"baszmeg";
+    for(int i = 0; i < kincs.size(); ++i)
+    {
+        if(abs(jatekos.x() - kincs[i].x()) == 1 && abs(jatekos.y() - kincs[i].y()) == 1)
+        {
+            visibleKincs.push_back(kincs[i]);
+        }
+    }
+
+
+    for(int i = 0; i < kincs.size(); ++i)
+    {
+        if(latasDEfal.contains(kincs[i]) || latas.contains(kincs[i]) || tavoliFal.contains(kincs[i]) || tavoliTalaj.contains(kincs[i]))
+        {
+            visibleKincs.push_back(kincs[i]);
+        }
+    }
+}
+
 void Model::azIdoSzall()
 {
     ++ido;
@@ -870,6 +941,11 @@ void Model::changePali()
 QVector<QPoint> Model::getVisibleMaps() const
 {
     return visibleMaps;
+}
+
+QVector<QPoint> Model::getVisibleKincs() const
+{
+    return visibleKincs;
 }
 
 QVector<QPoint> Model::getTavoliFal() const

@@ -317,8 +317,25 @@ void View::keyPressEvent(QKeyEvent * event)
 
 void View::win()
 {
+    model->calculatescore();
+    int finalscore = model->getScore();
+
+    int terkepek = 0;
+    for (int i=0; i<model->getMegVanATerkep().size(); ++i){
+        if (model->getMegVanATerkep()[i]) {
+            terkepek += 1;
+        }
+    }
+
+    int maradekkincsek = model->getKincs().size();
+    int osszeskincs = 4 * (((model->getN()*model->getN())/1600)+1) ;
+
     QMessageBox msg;
-    msg.setText("Gratulálok, megtaláltad a kiutat!");
+    msg.setText("Gratulálok, megtaláltad a kiutat!\n"
+                "Megtalált térképek: " + QString::number(terkepek) + "/4\n"
+                "Megtalált kincsek: " + QString::number(osszeskincs-maradekkincsek) + "/" + QString::number(osszeskincs) + "\n"
+                "Az időd: " + QString::number(model->getIdo()) + "\n"
+                "Összpontszámod: " + QString::number(finalscore));
     msg.exec();
     model->newGame();
 }

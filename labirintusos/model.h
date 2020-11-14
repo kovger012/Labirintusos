@@ -16,6 +16,8 @@ public:
 
     int getN() const;
 
+    int getScore() const;
+
     int getIdo() const;
 
     QPoint getJatekos() const;
@@ -76,6 +78,12 @@ public:
 
     void refreshVisibleKincs();
 
+    void refreshScore();
+
+    void addScore(int value);
+
+    void calculatescore();
+
     QVector<QPoint> getUtvonal() const;
 
     QVector<QPoint> getTavoliTalaj() const;
@@ -85,6 +93,8 @@ public:
     QVector<QPoint> getVisibleMaps() const;
 
     QVector<QPoint> getVisibleKincs() const;
+
+    QVector<bool> getMegVanATerkep() const;
 
 signals:
     void update();
@@ -98,6 +108,7 @@ public slots:
 private:
     int n;
     int gamesPlayed;
+    int score;
     QVector<QPoint> ures;
     QVector<QPoint> fal;
     QVector<QPoint> talaj;

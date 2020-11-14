@@ -4,7 +4,7 @@
 Model::Model(QObject *parent) : QObject(parent)
 {
     qsrand(time(NULL));
-    n = 40;
+    n = 20;
     gamesPlayed = 0;
     if(gamesPlayed == 1) newGame();
     newGame();
@@ -47,12 +47,10 @@ QVector<QPoint> Model::getKincs() const
     return kincs;
 }
 
-
 QVector<QVector<int>> Model::getPalyaMatrix() const
 {
     return palyamatrix;
 }
-
 
 void Model::alapAllapot(int n)
 {
@@ -76,16 +74,19 @@ void Model::alapAllapot(int n)
     tavoliTalaj.clear();
     visibleMaps.clear();
     visibleKincs.clear();
+    refreshScore();
 }
 
 void Model::labirintusCsinalo()
 {
     talaj.push_back(QPoint(0, 0));
     talaj.push_back(QPoint(0, n-1));
+    talaj.push_back(QPoint(n-2, 1));
     talaj.push_back(QPoint(n-1, 0));
     talaj.push_back(QPoint(n-1, n-1));
     ures.removeOne(QPoint(0, 0));
     ures.removeOne(QPoint(0, n-1));
+    ures.removeOne(QPoint(n-2, 1));
     ures.removeOne(QPoint(n-1, 0));
     ures.removeOne(QPoint(n-1, n-1));
     while(ures.size() != 0)
@@ -597,6 +598,14 @@ void Model::move(Direction dir)
         voltamMarItt();
     }
 
+    if (palyamatrix[jatekos.x()][jatekos.y()]>1 && palyamatrix[jatekos.x()][jatekos.y()]<5 ) {
+
+        kincs.removeOne(QPoint(jatekos.x(), jatekos.y()));
+        palyamatrix[jatekos.x()][jatekos.y()] = 1;
+        addScore(100);
+
+    }
+
     tavoliFal.clear();
     tavoliTalaj.clear();
     visibleMaps.clear();
@@ -864,6 +873,16 @@ int Model::getIdo() const
     return ido;
 }
 
+int Model::getScore() const
+{
+    return score;
+}
+
+void Model::calculatescore()
+{
+    score = score + (n*n) - (5*getIdo());
+}
+
 void Model::pauseAndPlay()
 {
     if(timer->isActive())
@@ -931,6 +950,11 @@ void Model::refreshVisibleKincs()
     }
 }
 
+void Model::refreshScore()
+{
+    score = 0;
+}
+
 void Model::azIdoSzall()
 {
     ++ido;
@@ -940,6 +964,16 @@ void Model::azIdoSzall()
 void Model::changePali()
 {
     masikat();
+}
+
+QVector<bool> Model::getMegVanATerkep() const
+{
+    return megVanATerkep;
+}
+
+void Model::addScore(int value)
+{
+    score = score + 100;
 }
 
 QVector<QPoint> Model::getVisibleMaps() const
